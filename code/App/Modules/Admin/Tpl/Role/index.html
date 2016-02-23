@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<link rel="stylesheet" href="__PUBLIC__/Css/public.css" />
+<meta http-equiv="Content-Type" content="text/html;charset=gbk">
+<head>
+</head>
+<body>
+	<table class="table">
+		<tr>
+			<th>ID</th>
+			<th>角色名称</th>
+			<th>角色描述</th>
+			<th>开启状态</th>
+			<th>操作</th>
+		</tr>
+
+		<foreach name="role" item="v">
+			<tr>
+				<td>{$v.id}</td>
+				<td>{$v.name}</td>
+				<td>{$v.remark}</td>
+				<td>
+					<if condition = "$v['status']">
+					开启
+					<else/>
+					关闭
+					</if>
+				</td>
+				<td>
+					[<a href="{:U(GROUP_NAME . '/Role/add', array('id' => $v['id']))}">配置权限</a>]
+				</td>
+			</tr>
+		</foreach>
+	</table>
+</body>
+</html>

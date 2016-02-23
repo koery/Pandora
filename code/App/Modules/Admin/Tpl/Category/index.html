@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<link rel="stylesheet" href="__PUBLIC__/Css/public.css" />
+<meta http-equiv="Content-Type" content="text/html;charset=gbk">
+<head>
+</head>
+<body>
+	<form action="{:U(GROUP_NAME . '/Category/reSort')}" method="post">
+		<table class="table">
+			<tr>
+				<th>ID</th>
+				<th>名称</th>
+				<th>级别</th>
+				<th>父节点</th>
+				<th>排序</th>
+				<th>操作</th>
+			</tr>
+
+			<foreach name="cate" item="v">
+				<tr>
+					<td width='8%' >{$v.id}</td>
+					<td>{$v.html}{$v.name}</td>
+					<td width='8%'>{$v.level}</td>
+					<td width='8%'>
+						<input type="text" name='{$v.id}_0' value='{$v.pid}'/>
+					</td>
+					<td width='8%'>
+						<input type="text" name='{$v.id}_1' value='{$v.sort}'/>
+					</td>
+					<td width='15%'>
+						[<a href="{:U(GROUP_NAME . '/Category/add', array('pid' => $v['id']))}">添加</a>]
+						[<a href="{:U(GROUP_NAME . '/Category/edit', array('id' => $v['id']))}">修改</a>]
+						[<a href="{:U(GROUP_NAME . '/Category/delete', array('id' => $v['id']))}">删除</a>]
+					</td>
+				</tr>
+			</foreach>
+
+			<tr>
+				<td colspan="5" align="center">
+					<input type="submit" value="重新排序"/>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

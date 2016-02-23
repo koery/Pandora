@@ -1,0 +1,128 @@
+CREATE TABLE IF NOT EXISTS `hd_news` (
+  `id` int unsigned NOT NULL auto_increment,
+  `title` varchar(40) NOT NULL,
+  `content` text,
+  `notes` text,
+  `from` varchar(10) default NULL,
+  `hits` int unsigned default NULL,
+  `time` int unsigned NOT NULL default 0,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=gbk
+
+CREATE DATABASE IF NOT EXISTS `blog` DEFAULT CHARSET gbk
+
+CREATE TABLE IF NOT EXISTS `hd_blog` (
+  `id` int unsigned NOT NULL auto_increment,
+  `title` varchar(40) NOT NULL DEFAULT '',
+  `content` text NOT NULL default '',
+  `summary` text NOT NULL default '',  //摘要
+  `notes` text NOT NULL default '',
+  `cid` int unsigned NOT NULL default 0,
+  `del` tinyint(1) unsigned NOT NULL default 0,
+  `from` varchar(10) NOT NULL default '',
+  `hits` int unsigned NOT NULL default 0,
+  `time` int unsigned NOT NULL default 0,
+  PRIMARY KEY  (`id`),
+  Index `cid` (`cid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=gbk
+
+CREATE TABLE IF NOT EXISTS `hd_blog_attr` (
+  `bid` int unsigned NOT NULL default 0,
+  `aid` int unsigned NOT NULL default 0,
+  Index `bid` (`bid`),
+  Index `aid` (`aid`)
+) ENGINE=MyISAM DEFAULT CHARSET=gbk
+
+
+CREATE TABLE IF NOT EXISTS `hd_admin` (
+  `id` int unsigned NOT NULL auto_increment,
+  `username` char(20) NOT NULL default '',
+  `userpass` char(32) NOT NULL default '',
+  `logintime` int unsigned NOT NULL default 0,
+  `loginip` char(20) NOT NULL default '',
+  `locked` tinyint(1) unsigned NOT NULL default 0,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=MyISAM  DEFAULT CHARSET=gbk ;
+
+INSERT INTO hd_admin SET username = 'admin', password = md5('admin'),logintime = unix_timestamp(now()), loginip='127.0.0.1',locked=0
+
+
+
+CREATE TABLE IF NOT EXISTS `hd_access` (
+  `role_id` smallint(6) unsigned NOT NULL,
+  `node_id` smallint(6) unsigned NOT NULL,
+  `level` tinyint(1) NOT NULL,
+  `module` varchar(50) DEFAULT NULL,
+  KEY `groupId` (`role_id`),
+  KEY `nodeId` (`node_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
+
+CREATE TABLE IF NOT EXISTS `hd_node` (
+  `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `title` varchar(50) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT '0',
+  `remark` varchar(255) DEFAULT NULL,
+  `sort` smallint(6) unsigned DEFAULT NULL,
+  `pid` smallint(6) unsigned NOT NULL,
+  `level` tinyint(1) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `level` (`level`),
+  KEY `pid` (`pid`),
+  KEY `status` (`status`),
+  KEY `name` (`name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=gbk;
+
+CREATE TABLE IF NOT EXISTS `hd_role` (
+  `id` smallint(6) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `pid` smallint(6) DEFAULT NULL,
+  `status` tinyint(1) unsigned DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pid` (`pid`),
+  KEY `status` (`status`)
+) ENGINE=MyISAM  DEFAULT CHARSET=gbk ;
+
+CREATE TABLE IF NOT EXISTS `hd_role_user` (
+  `role_id` mediumint(9) unsigned DEFAULT NULL,
+  `user_id` char(32) DEFAULT NULL,
+  KEY `group_id` (`role_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=gbk;
+
+insert into blog.hd_cate(id,name,pid,sort)
+select id,name,pid,id from study.dicttype where did=9 and id>0 group by id
+
+CREATE TABLE IF NOT EXISTS `hd_cate` (
+  `id` int unsigned NOT NULL auto_increment,
+  `name` varchar(15) NOT NULL default '',
+  `pid` int unsigned NOT NULL default 0,
+  `sort` smallint(6) NOT NULL default 0,
+  PRIMARY KEY  (`id`),
+  Index `pid` (`pid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=gbk
+
+CREATE TABLE IF NOT EXISTS `hd_attr` (
+  `id` int unsigned NOT NULL auto_increment,
+  `name` varchar(10) NOT NULL default '',
+  `color` varchar(10) NOT NULL default '',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=gbk
+
+CREATE TABLE IF NOT EXISTS `hd_wish` (
+  `id` int unsigned NOT NULL auto_increment,
+  `username` varchar(20) NOT NULL default '',
+  `content` text NOT NULL default '',
+  `time` int unsigned NOT NULL default 0,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=gbk
+
+ 数据库方式Session驱动
+CREATE TABLE IF NOT EXISTS hd_session (
+  `session_id` varchar(255) NOT NULL,
+  `session_expire` int NOT NULL,
+  `session_data` blob,
+  UNIQUE KEY `session_id` (`session_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=gbk

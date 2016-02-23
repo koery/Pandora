@@ -1,0 +1,42 @@
+<div class='main-right'>
+
+<php>
+		$hot = M('blog')->field('id','title','hits')->order('hits DESC')->limit(15)->select();
+		$new = M('blog')->field('id','title','hits')->order('time DESC')->limit(15)->select();
+</php>
+
+	<dl>
+		<dt>热门博文</dt>
+		<foreach name='hot' item='v'>
+			<dd>
+				<a href="{:U('/' . $v['id'])}">{$v.title}</a>
+				<span>({$v.hits})</span>
+			</dd>
+		</foreach>
+	</dl>
+
+	<dl>
+		<dt>最新发布</dt>
+		<foreach name='new' item='v'>
+			<dd>
+				<a href="{:U('/' . $v['id'])}">{$v.title}</a>
+				<span>({$v.hits})</span>
+			</dd>
+		</foreach>
+	</dl>
+
+	<dl>
+		<dt>友情连接</dt>
+		<dd>
+			<a href="">后盾网</a>
+		</dd>
+
+		<dd>
+			<a href="">后盾网论坛</a>
+		</dd>
+		<dd>
+			<a href="">后盾网学习社区</a>
+		</dd>
+	</dl>
+
+</div>

@@ -1,0 +1,50 @@
+<!--头部-->
+<div class='top-list-wrap'>
+	<div class='top-list'>
+		<ul class='l-list'>
+			<li><a href="" target='_blank'>后盾网</a></li>
+			<li><a href="" target='_blank'>后盾网论坛</a></li>
+			<li><a href="" target='_blank'>后盾学习社区</a></li>
+		</ul>
+		<ul class='r-list'>
+			<li><a href="" target='_blank'>HDPHP框架</a></li>
+			<li><a href="" target='_blank'>免费视频教程</a></li>
+		</ul>
+	</div>
+</div>
+
+
+<div class='top-search-wrap'>
+	<div class='top-search'>
+		<a href="" target='_blank' class='logo'>
+			<img src="__PUBLIC__/Images/logo.png"/>
+		</a>
+		<div class='search-wrap'>
+			<form action="{:U('/s')}" method='post'>
+				<input type="hidden" name='id' value='0'/>
+				<input type="text" name='key' class='search-content'/>
+				<input type="submit" name='search' value='搜索'/>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div class='top-nav-wrap'>
+	<ul class='nav-lv1'>
+		<li class='nav-lv1-li'>
+			<a href="" class='top-cate'>博客首页</a>
+		</li>
+		<foreach name='nav' item='v'>
+		<li class='nav-lv1-li'>
+			<a href="{:U('/c_' . $v['id'])}" class='top-cate'>{$v.name}</a>
+			<if condition='$v["child"]'>
+				<ul>
+					<foreach name='v.child' item='c'>
+						<li><a href="{:U('/c_' . $c['id'])}">{$c.name}</a></li>
+					</foreach>
+				</ul>
+			</if>
+		</li>
+		</foreach>
+	</ul>
+</div>

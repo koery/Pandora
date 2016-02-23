@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<link rel="stylesheet" href="__PUBLIC__/Css/public.css" />
+<meta http-equiv="Content-Type" content="text/html;charset=gbk">
+<head>
+</head>
+<body>
+	<table class="table">
+		<tr>
+			<th>ID</th>
+			<th>标题</th>
+			<th>所属分类</th>
+			<th>浏览次数</th>
+			<th>发布时间</th>
+			<th>操作</th>
+		</tr>
+
+		<foreach name="blog" item="v">
+			<tr>
+				<td width='5%'>{$v.id}</td>
+				<td>
+					{$v.title}<foreach name='v.attr' item='value'><strong style='color:{$value.color};padding:0 5'>{$value.name}</strong></foreach>
+				</td>
+				<td width='12%'>{$v.cate}</td>
+				<td width='12%'>{$v.hits}</td>
+				<td width='15%'>{$v.time|date='y-m-d H:i',###}</td>
+				<td width='20%'>
+					<if condition = "$type eq 0">  <!--ACTION_NAME eq 'index'-->
+						[<a href="{:U(GROUP_NAME . '/Blog/edit', array('id' => $v['id']))}">修改</a>]
+						[<a href="{:U(GROUP_NAME . '/Blog/totrach', array('id' => $v['id'],'type' => 1))}">删除</a>]
+					<else/>
+						[<a href="{:U(GROUP_NAME . '/Blog/edit', array('id' => $v['id']))}">修改</a>]
+						[<a href="{:U(GROUP_NAME . '/Blog/totrach', array('id' => $v['id'],'type' => 0))}">还原</a>]
+						[<a href="{:U(GROUP_NAME . '/Blog/delete', array('id' => $v['id']))}">彻底删除</a>]
+					</if>
+				</td>
+			</tr>
+		</foreach>
+		<tr>
+			<td colspan="6" align="center">
+				{$page}
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

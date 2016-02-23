@@ -1,0 +1,35 @@
+<include file='Common:header'/>
+	
+	<link rel="stylesheet" href="__PUBLIC__/Css/show.css" />
+	
+	<!--
+	<link rel="stylesheet" href="__ROOT__/Data/Ueditor/third-party/SyntaxHighlighter/shCoreDefault.css" />
+	<script type="text/JavaScript" charset="gbk" src='__ROOT__/Data/Ueditor/third-party/SyntaxHighlighter/shCore.js'></script>
+	<script type="text/JavaScript">
+		SyntaxHighlighter.all();
+	</script>
+	-->
+	
+<include file='Common:navtag' />
+
+	<div class='main'>
+		<div class='main-left'>
+			<div class='location'>
+				<a href="">首页</a>
+				<foreach name='parents' item='v'>
+					><a href="{:U('/c_' . $v['id'])}">{$v.name}</a>
+				</foreach>
+			</div>
+			<div class="title">
+				<p>{$blog.title}</p>
+				<div>
+					<span class='fl'>发布于：{$blog.time|date='Y年m月d日',###}</span>
+					<span class='fr'>已被阅读<script type="text/JavaScript" src='{:U(GROUP_NAME . "/Show/hits",array("id" => $blog["id"]))}'></script>次</span>
+				</div>
+			</div>
+			<div class='content' style='word-break:break-all'>{$blog.content}</div>
+		</div>
+	<include file='Common:righttag'/>
+	</div>
+
+<include file='Common:bottom'/>

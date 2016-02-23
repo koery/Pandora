@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<link rel="stylesheet" href="__PUBLIC__/Css/public.css" />
+<meta http-equiv="Content-Type" content="text/html;charset=gbk">
+<head>
+</head>
+<body>
+	<table class="table">
+		<tr>
+			<th>ID</th>
+			<th>节点名称</th>
+			<th>节点描述</th>
+			<th>排序</th>
+			<th>操作</th>
+		</tr>
+
+		<foreach name="node" item="app">
+			<tr>
+				<td>{$app.id}</td>
+				<td>{$app.name}</td>
+				<td>{$app.title}</td>
+				<td>{$app.sort}</td>
+				<td>
+					[<a href="{:U(GROUP_NAME . '/Node/add', array('pid' => $app['id'],'level' => $app['level'] + 1 ))}">添加控制器</a>]
+					[<a href="{:U(GROUP_NAME . '/Node/edit', array('id' => $app['id']))}">修改</a>]
+					[<a href="{:U(GROUP_NAME . '/Node/delete', array('id' => $app['id']))}">删除</a>]
+				</td>
+			</tr>
+			<foreach name="app.child" item="action">
+				<tr>
+					<td>{$action.id}</td>
+					<td>{$action.name}</td>
+					<td>{$action.title}</td>
+					<td>{$action.sort}</td>
+					<td>
+						[<a href="{:U(GROUP_NAME . '/Node/add', array('pid' => $action['id'],'level' => $action['level'] + 1 ))}">添加动作方法</a>]
+						[<a href="{:U(GROUP_NAME . '/Node/edit', array('id' => $action['id']))}">修改</a>]
+						[<a href="{:U(GROUP_NAME . '/Node/delete', array('id' => $action['id']))}">删除</a>]
+					</td>
+				</tr>
+				<foreach name="action.child" item="method">
+					<tr>
+						<td>{$method.id}</td>
+						<td>{$method.name}</td>
+						<td>{$method.title}</td>
+						<td>{$method.sort}</td>
+						<td>
+							[<a href="{:U(GROUP_NAME . '/Node/edit', array('id' => $method['id']))}">修改</a>]
+							[<a href="{:U(GROUP_NAME . '/Node/delete', array('id' => $method['id']))}">删除</a>]
+						</td>
+					</tr>
+				</foreach>
+			</foreach>
+		</foreach>
+	</table>
+</body>
+</html>
